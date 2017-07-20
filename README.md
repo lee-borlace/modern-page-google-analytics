@@ -14,3 +14,6 @@ This project is a way to have Google Analytics functionality on modern SPO pages
     3. Upload the app package *modern-page-ga.sppkg* to app catalog (you can find it in sharepoint/solution folder)
     4. Install the app "GA for Modern Sites" on sites to take effect on
     5. `gulp serve --nobrowser` - this is needed to make sure the SPFX JS for the app can be found! Later - will explore hosting on CDN so this is not necessary
+    6. Now start hitting pages to capture GA data! Couple of points :
+        1. At time of writing this only takes effect on modern pages, Site Contents, and modern list view pages.
+        2. It may take a few hours for data to become visible on your GA account. Going to "REAL-TIME" can be a good place to see data as it comes through. You can tell if your page is hitting GA by opening it it Chrome with the dev toolbar open, going to the Network tab and filtering by "google". If things are working, you'll see 2 requests once the page is loaded - one to "analytics.js", and one to "collect".
