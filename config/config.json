@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "entry": "./lib/extensions/modernPageGa/ModernPageGaApplicationCustomizer.js",
+      "manifest": "./src/extensions/modernPageGa/ModernPageGaApplicationCustomizer.manifest.json",
+      "outputPath": "./dist/modern-page-ga.bundle.js"
+    }
+  ],
+  "externals": {},
+  "localizedResources": {
+    "modernPageGaStrings": "extensions/modernPageGa/loc/{locale}.js"
+  }
+}
