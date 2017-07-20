@@ -1,8 +1,19 @@
 {
   "solution": {
-    "name": "modern-page-ga-client-side-solution",
+    "name": "GA for Modern Pages",
     "id": "b00b00f1-3e38-4d62-a583-decf9584e401",
-    "version": "1.0.0.0"
+    "version": "1.0.0.0",
+    "features": [{
+      "title": "GA for Modern Pages Feature",
+      "description": "GA for Modern Pages",
+      "id": "456da147-ced2-3036-b564-8dad5c1c2e34",
+      "version": "1.0.0.0",
+      "assets": {        
+        "elementManifests": [
+          "elements.xml"
+        ]
+      }
+    }]
   },
   "paths": {
     "zippedPackage": "solution/modern-page-ga.sppkg"

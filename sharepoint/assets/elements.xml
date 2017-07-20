@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+
+    <CustomAction 
+        Title="GA for Modern Pages"
+        Location="ClientSideExtension.ApplicationCustomizer"
+        ClientSideComponentId="fa8dda26-807a-49bf-9c7f-1d3f9c1914b8"
+        ClientSideComponentProperties="{}">
+
+    </CustomAction>
+
+</Elements>
