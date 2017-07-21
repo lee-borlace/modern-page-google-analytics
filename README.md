@@ -32,7 +32,7 @@ Follow the instructions [here](https://dev.office.com/sharepoint/docs/spfx/exten
     2. It may take a few hours for data to become visible on your GA account. Going to "REAL-TIME" can be a good place to see data as it comes through. You can tell if your page is hitting GA by opening it it Chrome with the dev toolbar open, going to the Network tab and filtering by "google". If things are working, you'll see 2 requests once the page is loaded - one to "analytics.js", and one to "collect".
 
 ## Building and running (hosted from CDN)
-With this option the relevant SPFX JS files are hosed in Azure CDN, so you don't need to be hosting them locally. At this point the app is properly deployed.
+With this option the relevant SPFX JS files are hosed in a CDN pointed to SPO, so you don't need to be hosting them locally. At this point the app is properly deployed. At time of writing you can only use a CDN which points to SPO (see the article below). Hopefully in future it will be possible to host in a general Azure CDN.
 
 See [this link](https://dev.office.com/sharepoint/docs/spfx/extensions/get-started/hosting-extension-from-office365-cdn) for instructions.
 
