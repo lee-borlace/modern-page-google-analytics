@@ -31,5 +31,5 @@ obj
 # Styles Generated Code
 *.scss.ts
 
-config\deploy-azure-storage.json
-config\write-manifests.json
+config/deploy-azure-storage.json
+config/write-manifests.json
