@@ -15,7 +15,15 @@ Note that at time of writing, once the app is added to the app store, the app ne
 2. Run `npm install` to install packages.
 
 ## Configuring SPO for Google Analytics
-The way the solution works is for the Google Analytics tracking code to be stored in a property bag called TODO. This can be configured at whatever level you like (site collection, web, list, etc). Site collection-level probably makes the most sense.
+The way the solution works is for the Google Analytics tracking code to be stored in a configuration list at the site collection root, in an entry with title "GoogleAnalyticsId". Property bags would otherwise have been used, but these are not available in modern SPO sites with NoScript turned on. The config list has mandatory Title and Value fields, both single line of text. 
+
+The script *provisioning\create-configList.ps1* creates the config list and inserts the required entry. Note this requires PnP Powershell module to be installed. See [here](https://github.com/SharePoint/PnP-PowerShell).
+
+Usage :
+
+```powershell
+.\create-configList.ps1 -siteCollectionUrl <site collection root URL> -gaId "<google tracking ID>"
+```
 
 ## Building and running (hosted from localhost)
 With this option you host the relevant SPFX JS files from localhost. This is built into the app which is deployed to SPO, so you need to be running the solution locally for it to work.
