@@ -30,24 +30,45 @@ export default class ModernPageGaApplicationCustomizer
     });
 
     return new Promise<void>((resolve, reject) => {
-      pnp.sp.web.select("AllProperties").expand("AllProperties").get().then(r => {
 
-        this._googleAnalyticsId = r.AllProperties.GoogleAnalyticsId;
+      // Query Configuration list for item with Title of "GoogleAnalyticsId", get the Value.
+      pnp.sp.site.rootWeb.lists
+        .getByTitle("Configuration")
+        .getItemsByCAMLQuery({
+          ViewXml:
+          `<View> 
+            <RowLimit>1</RowLimit> 
+            <Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>GoogleAnalyticsId</Value></Eq></Where></Query>
+            <ViewFields> 
+              <FieldRef Name='Value' /> 
+            </ViewFields> 
+          </View>` })
+        .then((items: any[]) => {
 
-        resolve();
-      });
+          if (items.length > 0) {
+            this._googleAnalyticsId = items[0].Value;
+            console.log("Found GoogleAnalyticsId in config list : " + this._googleAnalyticsId);
+          }
+          else {
+            console.warn("Couldn't find GoogleAnalyticsId in config list.");
+          }
+          resolve();
+        })
+        .catch((error: any) => {
+
+          console.error("Error trying to read GoogleAnalyticsId from config list : " + error.message);
+
+          resolve();
+        });
     });
   }
 
   @override
   public onRender(): void {
 
+    // if GA ID is configured, output GA tracking code.
     if (this._googleAnalyticsId) {
-
-      console.info("Found GoogleAnalyticsId property bag value : " + this._googleAnalyticsId);
-
       var d: any = new Date();
-
       (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
           (i[r].q = i[r].q || []).push(arguments)
@@ -55,13 +76,15 @@ export default class ModernPageGaApplicationCustomizer
           m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
       })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-
       ga('create', this._googleAnalyticsId, 'auto');
       ga('send', 'pageview');
     }
-    else {
-      console.warn("Couldn't find GoogleAnalyticsId property bag value");
-    }
+
 
   }
+
+  private getConfigValue(key: string): string {
+    return "";
+  }
+
 }

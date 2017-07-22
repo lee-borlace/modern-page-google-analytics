@@ -5,6 +5,8 @@ This project is a way to have Google Analytics functionality on modern SPO pages
 
 Note that at time of writing, once the app is added to the app store, the app needs to added to each site you want it to take effect on. The SPFX docco says that in future you will be able to activate just once for the entire site collection.
 
+Note that this SPFX solution will only apply GA to *modern* pages. To apply GA to *classic* pages, a parallel add-in is suggested to globally inject GA tracking code into the JS for each page based on the same configuration. It would be nice in future if one app could do both.
+
 ## Prerequisites
 - At time of writing, SPFX Extensions are in preview. Make sure you have a _development_ SPO tenant. A development site collection on a non-development tenant won't do it. Best bet is to sign up for one [here](https://portal.microsoftonline.com/Signup/MainSignUp.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK).
 - Start [here](https://dev.office.com/sharepoint/docs/spfx/extensions/overview-extensions) to set up your dev environment.

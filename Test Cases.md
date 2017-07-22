@@ -1,0 +1,4 @@
+- GoogleAnalyticsId is present in config list (everything works)
+- GoogleAnalyticsId is not present in config list (warning in console about missing item)
+- Config list not found (error in console about missing item)
+- Add app to sub-site (still finds config in top-level site)
