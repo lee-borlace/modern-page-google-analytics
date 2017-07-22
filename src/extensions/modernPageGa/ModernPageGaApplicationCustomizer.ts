@@ -22,6 +22,8 @@ export default class ModernPageGaApplicationCustomizer
 
   private _googleAnalyticsId: string;
 
+  readonly GA_KEY: string = "GoogleAnalyticsId";
+
   @override
   public onInit(): Promise<void> {
 
@@ -31,32 +33,34 @@ export default class ModernPageGaApplicationCustomizer
 
     return new Promise<void>((resolve, reject) => {
 
-      // Query Configuration list for item with Title of "GoogleAnalyticsId", get the Value.
+      // Query Configuration list for item with Title of "GoogleAnalyticsId", get the Value. 
+      // TODO - this is quick code to read form the list - in future this should be moved to another method or class.
+      // TODO - cache the results using pnp.storage.local.getOrPut.
       pnp.sp.site.rootWeb.lists
         .getByTitle("Configuration")
         .getItemsByCAMLQuery({
           ViewXml:
           `<View> 
-            <RowLimit>1</RowLimit> 
-            <Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>GoogleAnalyticsId</Value></Eq></Where></Query>
-            <ViewFields> 
-              <FieldRef Name='Value' /> 
-            </ViewFields> 
-          </View>` })
+                  <RowLimit>1</RowLimit> 
+                  <Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>` + this.GA_KEY + `</Value></Eq></Where></Query>
+                  <ViewFields> 
+                    <FieldRef Name='Value' /> 
+                  </ViewFields> 
+                </View>` })
         .then((items: any[]) => {
 
           if (items.length > 0) {
             this._googleAnalyticsId = items[0].Value;
-            console.log("Found GoogleAnalyticsId in config list : " + this._googleAnalyticsId);
+            console.log("Found " + this.GA_KEY + " in config list : " + this._googleAnalyticsId);
           }
           else {
-            console.warn("Couldn't find GoogleAnalyticsId in config list.");
+            console.warn("Couldn't find " + this.GA_KEY + " in config list.");
           }
           resolve();
         })
         .catch((error: any) => {
 
-          console.error("Error trying to read GoogleAnalyticsId from config list : " + error.message);
+          console.error("Error trying to read " + this.GA_KEY + " from config list : " + error.message);
 
           resolve();
         });
