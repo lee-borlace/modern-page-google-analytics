@@ -61,12 +61,12 @@ export class SpConfiguration {
                 .getItemsByCAMLQuery({
                     ViewXml:
                     `<View> 
-            <RowLimit>1</RowLimit> 
-            <Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>` + key + `</Value></Eq></Where></Query>
-            <ViewFields> 
-              <FieldRef Name='Value' /> 
-            </ViewFields> 
-          </View>` })
+                        <RowLimit>1</RowLimit> 
+                        <Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>` + key + `</Value></Eq></Where></Query>
+                        <ViewFields> 
+                        <FieldRef Name='Value' /> 
+                        </ViewFields> 
+                    </View>` })
                 .then((items: any[]) => {
 
                     var retVal: string = "";

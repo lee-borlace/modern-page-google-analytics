@@ -46,5 +46,8 @@ With this option the relevant SPFX JS files are hosed in a CDN pointed to SPO, s
 
 See [this link](https://dev.office.com/sharepoint/docs/spfx/extensions/get-started/hosting-extension-from-office365-cdn) for instructions.
 
-
+1. `gulp bundle --ship`
+2. `gulp package-solution --ship`
+3. Re-upload app to app catalog.
+4. Re-copy files from *temp/deploy* to the CDN folder created previously 
 
