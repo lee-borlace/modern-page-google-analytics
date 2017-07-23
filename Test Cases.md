@@ -3,4 +3,4 @@
 - Config list not found (error in console about missing item)
 - Add app to sub-site (still finds config in top-level site)
 - Test on mobile
-- Test from CSN
+- Test fullt-deployed to CDN

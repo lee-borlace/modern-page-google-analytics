@@ -58,3 +58,11 @@ Note that *config/write-manifests.json* isn't checked into (and is ignored by) G
 3. Re-upload app to app catalog.
 4. Re-copy files from *temp/deploy* to the CDN folder created previously 
 
+## How it works
+The project builds an app which can be uploaded to the app catalog. When it is installed on a SP site, the various types of pages which SPFX extensions apply to (modern pages, Site Contents, and modern list view pages) will have the extension take effect. 
+
+The main logic is in `ModernPageGaApplicationCustomizer.onInit()` (to read GA ID from config) and `ModernPageGaApplicationCustomizer.onRender()` (to output the tracking code onto the page). 
+
+The actual code output onto the page in `onRender()` is a slightly tweaked version of the standard GA JS snippet. The *google.analytics* Typescript types are referenced in *tsconfig.json*, which is how `ga` resolves. Could have just made `ga` an `any` variable instead of doing that if you really hate strong typing.
+
+The code to read from the config lists and cache the result in localbrowser  storage uses the *PnP-JS-Core* typings (wrapping https://github.com/SharePoint/PnP-JS-Core) to make things easier than manual REST calls.
