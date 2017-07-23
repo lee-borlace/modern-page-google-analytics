@@ -35,8 +35,8 @@ export default class ModernPageGaApplicationCustomizer
 
       // get GA tracking ID from config and cache it.
       this.getAndCacheConfigValue(this.GA_KEY)
-        .then((gaId) => {
-          if(gaId) {
+        .then((gaId:string) => {
+          if (gaId) {
             console.log("Found " + this.GA_KEY + " in config list : " + gaId);
             this._googleAnalyticsId = gaId;
           } else {
@@ -74,35 +74,41 @@ export default class ModernPageGaApplicationCustomizer
   private getAndCacheConfigValue(key: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
 
-      var value:string = pnp.storage.session.getOrPut(key, () => {
+      /* TODO - this could be simpler using pnp.storage.session.getorput() but it doesn't
+      seem to like calling other PnP code from its getter. */
 
-        pnp.sp.site.rootWeb.lists
-          .getByTitle("Configuration")
-          .getItemsByCAMLQuery({
-            ViewXml:
-            `<View> 
-                  <RowLimit>1</RowLimit> 
-                  <Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>` + key + `</Value></Eq></Where></Query>
-                  <ViewFields> 
-                    <FieldRef Name='Value' /> 
-                  </ViewFields> 
-                </View>` })
-          .then((items: any[]) => {
+      var value: string;
 
-            var retVal:string;
+      if (pnp.storage.session.enabled) {
 
-            if (items.length > 0) {
-              retVal = items[0].Value;
-            }
+        value = pnp.storage.session.get(key);
 
-            // return out of getOrPut's getter method
-            return retVal;
+        // found value in cache
+        if (value) {
+          console.log(`getAndCacheConfigValue() : value for ${key} found in cache : ${value}.`);
+
+          resolve(value);
+        } else {
+
+          console.log(`getAndCacheConfigValue() : value for ${key} not found in cache, reading from config instead and caching.`);
+
+          this.getConfigValue(key)
+            .then((valueRead:string) => {
+              pnp.storage.session.put(key, valueRead);
+              resolve(valueRead);
+            })
+            .catch((error) => { reject(error); });
+        }
+
+      } else {
+        console.log("getAndCacheConfigValue() : session storage not enabled, reading from config instead.");
+        this.getConfigValue(key)
+          .then((valueRead) => {
+            pnp.storage.session.put(key, valueRead);
+            resolve(valueRead);
           })
-          .catch((error: any) => {
-            // if there is an error, reject the promise of getAndCacheConfigValue() - getOrPut() will never conclude
-            reject(error);
-          });
-      });
+          .catch((error) => { reject(error); });
+      }
 
       // now that getOrPut() has finished, resolve the promise with its return value
       resolve(value);
@@ -110,6 +116,41 @@ export default class ModernPageGaApplicationCustomizer
     });
   }
 
+  // get config value without caching
+  private getConfigValue(key: string): Promise<string> {
+
+    return new Promise<string>((resolve, reject) => {
+
+      pnp.sp.site.rootWeb.lists
+        .getByTitle("Configuration")
+        .getItemsByCAMLQuery({
+          ViewXml:
+          `<View> 
+            <RowLimit>1</RowLimit> 
+            <Query><Where><Eq><FieldRef Name='Title' /><Value Type='Text'>` + key + `</Value></Eq></Where></Query>
+            <ViewFields> 
+              <FieldRef Name='Value' /> 
+            </ViewFields> 
+          </View>` })
+        .then((items: any[]) => {
+
+          var retVal: string = "";
+
+          if (items.length > 0) {
+            retVal = items[0].Value;
+          }
+
+          resolve(retVal);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+
+        console.log("TODO - why is this line being hit!?!?!");
+
+    });
+
+  }
 
 
 }
