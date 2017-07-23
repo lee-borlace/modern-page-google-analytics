@@ -109,10 +109,6 @@ export default class ModernPageGaApplicationCustomizer
           })
           .catch((error) => { reject(error); });
       }
-
-      // now that getOrPut() has finished, resolve the promise with its return value
-      resolve(value);
-
     });
   }
 
@@ -145,9 +141,6 @@ export default class ModernPageGaApplicationCustomizer
         .catch((error: any) => {
           reject(error);
         });
-
-        console.log("TODO - why is this line being hit!?!?!");
-
     });
 
   }
