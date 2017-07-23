@@ -65,4 +65,4 @@ The main logic is in `ModernPageGaApplicationCustomizer.onInit()` (to read GA ID
 
 The actual code output onto the page in `onRender()` is a slightly tweaked version of the standard GA JS snippet. The *google.analytics* Typescript types are referenced in *tsconfig.json*, which is how `ga` resolves. Could have just made `ga` an `any` variable instead of doing that if you really hate strong typing.
 
-The code to read from the config lists and cache the result in localbrowser  storage uses the *PnP-JS-Core* typings (wrapping https://github.com/SharePoint/PnP-JS-Core) to make things easier than manual REST calls.
+The code to read from the config lists and cache the result in local browser storage uses the *PnP-JS-Core* typings (wrapping https://github.com/SharePoint/PnP-JS-Core) to make things easier than manual REST calls.
