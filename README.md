@@ -46,6 +46,14 @@ With this option the relevant SPFX JS files are hosed in a CDN pointed to SPO, s
 
 See [this link](https://dev.office.com/sharepoint/docs/spfx/extensions/get-started/hosting-extension-from-office365-cdn) for instructions.
 
+Note that *config/write-manifests.json* isn't checked into (and is ignored by) Github so you will need to create your own with your details as described in the MS docco.
+
+```json
+{
+  "cdnBasePath": "https://publiccdn.sharepointonline.com/yourtenant.sharepoint.com/sites/yoursite/yourlibrary/yourfolder"
+}
+```
+
 1. `gulp bundle --ship`
 2. `gulp package-solution --ship`
 3. Re-upload app to app catalog.
